@@ -10,7 +10,6 @@ class HomeTask(BaseObjectMixin):
     slug = models.SlugField()
     condition = models.TextField()
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
-    # max_mark = models.PositiveIntegerField()  # ?
 
     def __str__(self):
         return self.name

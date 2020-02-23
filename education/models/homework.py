@@ -17,19 +17,18 @@ def file_path(instance, file_name):
 
 class HomeworkStatus(Enum):
     PASSED = 'PASSED'
-    NOT_PASSED = 'NOT PASSED'
+    NOT_PASSED = 'NOT_PASSED'
 
 
 HOMEWORK_STATUS = ((HomeworkStatus.PASSED.value, gettext('Passed')),
-                   (HomeworkStatus.NOT_PASSED, gettext('Not passed yet')))
+                   (HomeworkStatus.NOT_PASSED.value, gettext('Not passed yet')))
 
 
 class Homework(BaseObjectMixin):
     content = models.FileField(upload_to=file_path)
     student = models.ForeignKey(User, on_delete=models.CASCADE)
     home_task = models.ForeignKey(HomeTask, on_delete=models.CASCADE)
-    status = models.CharField(choices=HOMEWORK_STATUS, max_length=20, default=HOMEWORK_STATUS[1])
-    # mark = models.PositiveIntegerField(default=0)
+    status = models.CharField(choices=HOMEWORK_STATUS, max_length=100, default=HOMEWORK_STATUS[1])
 
     def __str__(self):
         return 'Home task: ' + str(self.home_task) + '. Student: ' + str(self.student)
