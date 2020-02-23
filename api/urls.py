@@ -1,12 +1,12 @@
-from django.conf import settings
-from django.conf.urls.static import static
 from django.urls import include, path
 from rest_framework import routers
 
-from education.api.views import (CourseViewSet,
+from education.api.views import (CommentViewSet,
+                                 CourseViewSet,
                                  HomeTaskViewSet,
                                  HomeworkViewSet,
-                                 LectureViewSet)
+                                 LectureViewSet,
+                                 MarkViewSet)
 
 
 router = routers.DefaultRouter()
@@ -14,7 +14,10 @@ router.register(r'course', CourseViewSet)
 router.register(r'home-task', HomeTaskViewSet)
 router.register(r'homework', HomeworkViewSet)
 router.register(r'lecture', LectureViewSet)
+router.register(r'mark', MarkViewSet)
+router.register(r'comment', CommentViewSet)
 
 urlpatterns = [
     path(r'', include(router.urls)),
+    path(r'api/auth', include('rest_framework.urls'))
 ]

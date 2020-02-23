@@ -30,5 +30,8 @@ class Homework(BaseObjectMixin):
     home_task = models.ForeignKey(HomeTask, on_delete=models.CASCADE)
     status = models.CharField(choices=HOMEWORK_STATUS, max_length=100, default=HOMEWORK_STATUS[1])
 
+    class Meta:
+        unique_together = ('student', 'home_task')
+
     def __str__(self):
         return 'Home task: ' + str(self.home_task) + '. Student: ' + str(self.student)
