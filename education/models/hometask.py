@@ -10,9 +10,10 @@ class HomeTask(BaseObjectMixin):
     slug = models.SlugField()
     condition = models.TextField()
     lecture = models.ForeignKey(Lecture, on_delete=models.CASCADE)
+    max_mark = models.IntegerField(default=100)
 
     def __str__(self):
-        return self.name
+        return 'Task: ' + self.name + ' Max_mark: ' + str(self.max_mark)
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.name)

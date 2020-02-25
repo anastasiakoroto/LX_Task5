@@ -1,4 +1,4 @@
-from django.contrib.auth.models import User
+from django.conf import settings
 from django.db import models
 from django.utils.timezone import now as tz_now
 from django.utils.translation import gettext
@@ -26,12 +26,16 @@ HOMEWORK_STATUS = ((HomeworkStatus.PASSED.value, gettext('Passed')),
 
 class Homework(BaseObjectMixin):
     content = models.FileField(upload_to=file_path)
-    student = models.ForeignKey(User, on_delete=models.CASCADE)
+    student = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE,
+                                limit_choices_to={'student_user': True})
     home_task = models.ForeignKey(HomeTask, on_delete=models.CASCADE)
-    status = models.CharField(choices=HOMEWORK_STATUS, max_length=100, default=HOMEWORK_STATUS[1])
+    status = models.CharField(choices=HOMEWORK_STATUS,
+                              max_length=100,
+                              default=HOMEWORK_STATUS[1])
 
     class Meta:
         unique_together = ('student', 'home_task')
 
     def __str__(self):
-        return 'Home task: ' + str(self.home_task) + '. Student: ' + str(self.student)
+        return 'Home task: ' + str(self.home_task.name) + '. Student: ' + str(self.student)
